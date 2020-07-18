@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({
 // parse application/json
 app.use(bodyParser.json());
 
-
 app.use(usuario);
 
 mongoose.connect(process.env.URLDB, {
@@ -30,5 +29,4 @@ mongoose.connect(process.env.URLDB, {
 
 app.listen(process.env.PORT, () => {
     console.log("Escuchando el puerto 8080")
-    console.log(process.env.URLDB)
 });
