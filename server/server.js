@@ -1,10 +1,9 @@
-require('./config/config')
+require('./config/config');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-
-const usuario = require('./routes/usuario');
+const indexRoute = require('./routes/index');
+const conexion = require('./config/conexion');
 
 app.use(bodyParser.urlencoded({
     extended: false
@@ -13,19 +12,9 @@ app.use(bodyParser.urlencoded({
 // parse application/json
 app.use(bodyParser.json());
 
-app.use(usuario);
+app.use(indexRoute);
 
-mongoose.connect(process.env.URLDB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false
-    },
-    (err, res) => {
-        if (err) throw err;
-        console.log("conexión establecida")
-
-    });
+conexion();
 
 app.listen(process.env.PORT, () => {
     console.log("Escuchando el puerto 8080")

@@ -4,8 +4,10 @@ const bcrypt = require('bcrypt');
 
 var Users = require('../models/usuario');
 const _ = require('underscore');
-// ----------------
-app.get('/', function (req, res) {
+const { authToken, verificacion_role} = require('../middlewares/authentication');
+
+
+app.get('/',[authToken], function (req, res) {
     var desde = (req.query.desde) || 0;
     desde = Number(desde);
     var hasta = req.query.hasta || 5;
@@ -36,7 +38,7 @@ app.get('/', function (req, res) {
 
 })
 
-app.post('/usuario', function (req, res) {
+app.post('/usuario',[authToken,verificacion_role], function (req, res) {
     // res.json('post Usuario');
 
     var data = req.body;
@@ -65,7 +67,7 @@ app.post('/usuario', function (req, res) {
     })
 })
 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id',[authToken], function (req, res) {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'role', 'estado']);
@@ -88,7 +90,7 @@ app.put('/usuario/:id', function (req, res) {
     // usuario.
 })
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id',[authToken], function (req, res) {
 
     let id = req.params.id;
     let body = req.body;
