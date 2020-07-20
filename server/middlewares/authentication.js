@@ -22,8 +22,8 @@ var authToken = (req, res, next) => {
 }
 
 var verificacion_role = (req, res, next) => {
-    var role = req.body.role;
-    if (role !== 'ADMIN_ROLE') {
+    var usuario = req.usuario;
+    if (usuario.role !== 'ADMIN_ROLE') {
         return res.status(401).json({
             ok: false,
             err: {
